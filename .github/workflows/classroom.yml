@@ -36,7 +36,6 @@ jobs:
         run: |
           docker compose up -d
           ./scripts/wait-script.sh
-          sleep 30
         env:
           WAIT_PORTS: 8080,8070,8060,8050
         # ./scripts/wait-script.sh
@@ -44,7 +43,6 @@ jobs:
 
       - name: Fill database
         run: |
-          sleep 10
           cd src
           chmod +x fill_db.sh
           ./fill_db.sh
