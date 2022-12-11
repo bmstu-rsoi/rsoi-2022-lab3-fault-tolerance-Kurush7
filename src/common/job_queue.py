@@ -29,7 +29,12 @@ class TaskQueue:
             try:
                 result = task()
                 if callback:
-                    callback(result)
+                    try:
+                        callback(result)
+                    except Exception as e:
+                        if self.logger:
+                            self.logger.error(f'scheduling task {name} executed, but callback failed: {e}')
+
             except Exception as e:
                 if retry is None:
                     if self.logger:

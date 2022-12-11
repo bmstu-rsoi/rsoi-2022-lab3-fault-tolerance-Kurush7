@@ -18,6 +18,9 @@ class IReservationRepository:
     def create_reservation(self, res_uid, username, book_uid, library_uid,
                            status, start_date, till_date): pass
 
+    @abstractmethod
+    def delete_reservation(self, uid): pass
+
 
 class ReservationRepository(IReservationRepository, rep.QRRepository):
     def __init__(self):
@@ -34,6 +37,10 @@ class ReservationRepository(IReservationRepository, rep.QRRepository):
             raise Exception('DBAdapter not connected to database')
         reservation = self.db.select(self.db.reservation).where(reservation_uid=uid).one()
         return reservation
+
+    def delete_reservation(self, uid):
+        ok = self.db.delete(self.db.reservation, auto_commit=True).where(reservation_uid=uid).exec()
+        return ok
 
     def set_reservation_status(self, uid, status):
         if self.db is None:

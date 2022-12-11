@@ -40,6 +40,13 @@ def create_reservation(ctx: QRContext):
     return MethodResult(ReservationDTO(**reservation))
 
 
+def delete_reservation(ctx: QRContext, reservation_uid):
+    reservation = ctx.repository.delete_reservation(reservation_uid)
+    if reservation is None:
+        return MethodResult('failed to delete reservation', 400)
+    return MethodResult()
+
+
 def get_reservation(ctx: QRContext, reservation_uid):
     reservation = ctx.repository.get_reservation(reservation_uid)
     if reservation is None:
@@ -76,6 +83,7 @@ if __name__ == "__main__":
     server.register_method('/api/v1/reservations', get_user_reservations, 'GET')
     server.register_method('/api/v1/reservations/<reservation_uid>', get_reservation, 'GET')
     server.register_method('/api/v1/reservations', create_reservation, 'POST')
+    server.register_method('/api/v1/reservations/<reservation_uid>', delete_reservation, 'DELETE')
     server.register_method('/api/v1/reservations/<reservation_uid>', set_reservation_status, 'POST')
     server.register_method('/manage/health', health, 'GET')
     server.run(host, port)
