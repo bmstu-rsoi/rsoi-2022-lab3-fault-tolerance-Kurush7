@@ -1,44 +1,14 @@
 {
-  "_": {
-    "postman_variable_scope": "environment",
-    "postman_exported_at": "2022-12-11T22:15:43.142Z",
-    "postman_exported_using": "Newman/5.3.2"
-  },
-  "id": "f30432e5-4321-4516-8c53-4e2d4f7abf94",
-  "name": "[rsoi][local] Library System",
-  "values": [
-    {
-      "type": "any",
-      "value": "http://localhost:8080",
-      "key": "baseUrl"
-    },
-    {
-      "type": "any",
-      "value": "83575e12-7ce0-48ee-9931-51919ff3c9ee",
-      "key": "libraryUid"
-    },
-    {
-      "type": "any",
-      "value": "f7cdc58f-2caf-4b15-9727-f89dcc629b27",
-      "key": "bookUid"
-    },
-    {
-      "type": "any",
-      "value": "Test Max",
-      "key": "username"
-    },
-    {
-      "type": "any",
-      "value": 65,
-      "key": "stars"
-    },
-    {
-      "type": "any",
-      "value": "841091d5-8104-467a-9c05-4fb6a2984097",
-      "key": "reservationUid"
-    }
-  ],
-  "_postman_variable_scope": "environment",
-  "_postman_exported_at": "2022-12-11T22:15:45.729Z",
-  "_postman_exported_using": "Newman/5.3.2"
+	"id": "f30432e5-4321-4516-8c53-4e2d4f7abf94",
+	"name": "[rsoi][local] Library System",
+	"values": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2021-10-15T18:17:46.740Z",
+	"_postman_exported_using": "Postman/9.0.5"
 }
