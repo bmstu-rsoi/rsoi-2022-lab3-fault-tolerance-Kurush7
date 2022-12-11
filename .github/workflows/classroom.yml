@@ -23,17 +23,9 @@ jobs:
                   ./20-create-databases.sh
                   cd ../src
         run: |
-          cd postgres
-          chmod +x 20-create-databases.sh
-          ./20-create-databases.sh
-
-          cd ../src
+          cd src
           chmod +x build_docker.sh
           ./build_docker.sh
-#        run: |
-#          cd src
-#          chmod +x build_docker.sh
-#          ./build_docker.sh
 
       - name: Build images
         timeout-minutes: 10
@@ -50,7 +42,11 @@ jobs:
 
       - name: Fill database
         run: |
-          cd src
+          cd postgres
+          chmod +x 20-create-databases.sh
+          ./20-create-databases.sh
+
+          cd ../src
           chmod +x fill_db.sh
           ./fill_db.sh
 
