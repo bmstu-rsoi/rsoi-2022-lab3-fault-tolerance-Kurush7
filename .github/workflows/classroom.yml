@@ -18,10 +18,22 @@ jobs:
       - uses: docker/setup-buildx-action@v2
 
       - name: Build docker containers
+                  cd postgres
+                  chmod +x 20-create-databases.sh
+                  ./20-create-databases.sh
+                  cd ../src
         run: |
-          cd src
+          cd postgres
+          chmod +x 20-create-databases.sh
+          ./20-create-databases.sh
+
+          cd ../src
           chmod +x build_docker.sh
           ./build_docker.sh
+#        run: |
+#          cd src
+#          chmod +x build_docker.sh
+#          ./build_docker.sh
 
       - name: Build images
         timeout-minutes: 10
