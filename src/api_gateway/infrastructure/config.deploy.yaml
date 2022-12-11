@@ -23,5 +23,5 @@ reservation_service:
   port: 8070
 
 circuit_breaker:
-  failure_threshold: 10
+  failure_threshold: 1000
   knock_timeout: 30   # опрашивать упавшие сервисы раз в N секунд
