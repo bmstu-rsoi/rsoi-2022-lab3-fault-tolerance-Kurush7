@@ -1,0 +1,11 @@
+FROM python:3.8
+
+RUN apt update && apt install -y gcc python3-dev musl-dev
+
+COPY ./library/requirements.txt ./library/requirements.txt
+RUN pip3 install -r ./library/requirements.txt
+
+COPY . .
+COPY ./library/infrastructure/config.deploy.yaml ./library/config.yaml
+WORKDIR ./library
+CMD ["python", "main.py"]

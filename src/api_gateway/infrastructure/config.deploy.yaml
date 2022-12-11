@@ -21,3 +21,7 @@ library_service:
 reservation_service:
   host: reservation
   port: 8070
+
+circuit_breaker:
+  failure_threshold: 10
+  knock_timeout: 30   # опрашивать упавшие сервисы раз в N секунд
