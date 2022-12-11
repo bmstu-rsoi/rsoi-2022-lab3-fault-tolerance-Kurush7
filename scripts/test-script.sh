@@ -57,7 +57,7 @@ trap 'timed $start' EXIT
 printf "=== Start test scenario ===\n"
 
 # success execute
-success
+#success
 
 # stop service
 step 1
