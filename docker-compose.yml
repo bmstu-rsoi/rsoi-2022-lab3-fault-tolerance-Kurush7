@@ -15,28 +15,28 @@ services:
       - "5432:5432"
 
   library:
-    image: rsoi_lab2_library
+    image: rsoi_lab3_library
     container_name: library
     restart: on-failure
     ports:
       - "8060:8060"
 
   rating:
-    image: rsoi_lab2_rating
+    image: rsoi_lab3_rating
     container_name: rating
     restart: on-failure
     ports:
       - "8050:8050"
 
   reservation:
-    image: rsoi_lab2_reservation
+    image: rsoi_lab3_reservation
     container_name: reservation
     restart: on-failure
     ports:
       - "8070:8070"
 
   api_gateway:
-    image: rsoi_lab2_api
+    image: rsoi_lab3_api
     container_name: api_gateway
     restart: on-failure
     ports:
