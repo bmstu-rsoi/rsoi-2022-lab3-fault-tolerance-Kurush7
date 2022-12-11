@@ -40,14 +40,14 @@ jobs:
           WAIT_PORTS: 8080,8070,8060,8050
         # ./scripts/wait-script.sh
 
+#          sleep 20
+#          cd postgres
+#          chmod +x 20-create-databases.sh
+#          ./20-create-databases.sh
       - name: Fill database
         run: |
           sleep 20
-          cd postgres
-          chmod +x 20-create-databases.sh
-          ./20-create-databases.sh
-
-          cd ../src
+          cd src
           chmod +x fill_db.sh
           ./fill_db.sh
 
