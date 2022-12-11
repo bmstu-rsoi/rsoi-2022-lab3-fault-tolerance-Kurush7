@@ -13,8 +13,46 @@ services:
       - ./postgres/:/docker-entrypoint-initdb.d/
     ports:
       - "5432:5432"
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis
+    restart: on-failure
+    command: redis-server --save 20 1 --loglevel notice
+    ports:
+      - "6379:6379"
+    volumes:
+      - cache:/data
 
-# TODO добавить сервисы
+
+  library:
+    image: rsoi_lab2_library
+    container_name: library
+    restart: on-failure
+    ports:
+      - "8060:8060"
+
+  rating:
+    image: rsoi_lab2_rating
+    container_name: rating
+    restart: on-failure
+    ports:
+      - "8050:8050"
+
+  reservation:
+    image: rsoi_lab2_reservation
+    container_name: reservation
+    restart: on-failure
+    ports:
+      - "8070:8070"
+
+  api_gateway:
+    image: rsoi_lab2_api
+    container_name: api_gateway
+    restart: on-failure
+    ports:
+      - "8080:8080"
 
 volumes:
   db-data:
+  cache:
+    driver: local

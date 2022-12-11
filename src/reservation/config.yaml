@@ -1,0 +1,25 @@
+app:
+  app_name: ReservationService
+  debug: false
+  host: 0.0.0.0
+  port: 8070
+  logging:
+    logger_name: ReservationServiceLogger
+    app_name: ReservationService
+    level: info
+    file: reservation_service.log
+    file_level: info
+
+database:
+  connector: postgres
+  dbname: reservations
+  username: program
+  password: test
+  host: 0.0.0.0
+  port: 5432
+  logging:
+    logger_name: DatabaseLogger
+    app_name: ReservationService
+    level: info
+    file: reservation_service.log
+    file_level: info
