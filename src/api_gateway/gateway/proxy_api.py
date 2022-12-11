@@ -6,7 +6,7 @@ from .circuit_breaker import circuitBreaker, Service, ServiceUnavailableExceptio
 
 
 # /api/v1/libraries
-@circuitBreaker.circuit([Service.LIBRARY], MethodResult('libraries not found', 500))
+@circuitBreaker.circuit([Service.LIBRARY], MethodResult('libraries not found', 503))
 def list_libraries_in_city(ctx: QRContext):
     # full redirect
     address = ctx.meta['services']['library']
@@ -20,7 +20,7 @@ def list_libraries_in_city(ctx: QRContext):
 
 
 # /api/v1/libraries/<library_uid>/books
-@circuitBreaker.circuit([Service.LIBRARY], MethodResult('books not found', 500))
+@circuitBreaker.circuit([Service.LIBRARY], MethodResult('books not found', 503))
 def list_books_in_library(ctx: QRContext, library_uid: int):
     # full redirect
     address = ctx.meta['services']['library']
@@ -33,7 +33,7 @@ def list_books_in_library(ctx: QRContext, library_uid: int):
 
 
 # /api/v1/rating
-@circuitBreaker.circuit([Service.RATING], MethodResult('user not found', 500))
+@circuitBreaker.circuit([Service.RATING], MethodResult(ErrorDTO('Bonus Service unavailable'), 503))
 def get_user_rating(ctx: QRContext):
     # full redirect
     address = ctx.meta['services']['rating']

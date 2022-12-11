@@ -41,6 +41,10 @@ class RentBookError(QRDTO):
 class ReturnBookError(QRDTO):
     message: str
 
+@dataclass
+class ErrorDTO(QRDTO):
+    message: str
+
 
 @dataclass
 class CreateReservationDTO(ReservationFullDTO):

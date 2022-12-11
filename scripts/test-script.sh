@@ -25,7 +25,7 @@ step() {
 
   printf "=== Step %d: %s %s ===\n" "$step" "$operation" "$service"
 
-  docker compose "$operation" "$service"
+  docker-compose "$operation" "$service"
   if [[ "$operation" == "start" ]]; then
     "$path"/wait-for.sh -t 120 "http://localhost:$port/manage/health" -- echo "Host localhost:$port is active"
   fi
@@ -43,6 +43,12 @@ start=$(date +%s)
 trap 'timed $start' EXIT
 
 printf "=== Start test scenario ===\n"
+
+newman run \
+  --delay-request=100 \
+  --folder=success \
+  --environment "$variant"/postman/environment.json \
+  "$variant"/postman/collection.json
 
 # stop service
 step 1

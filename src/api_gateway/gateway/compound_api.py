@@ -11,7 +11,7 @@ from .utils import *
 from common.job_queue import TASK_QUEUE
 
 
-@circuitBreaker.circuit([Service.RESERVATION], MethodResult('reservations not found', 500))
+@circuitBreaker.circuit([Service.RESERVATION], MethodResult(ErrorDTO('Reservation Service unavailable'), 503))
 def get_user_reservations(ctx: QRContext):
     # full redirect
     reservation_address = ctx.meta['services']['reservation']
@@ -51,7 +51,7 @@ def get_user_reservations(ctx: QRContext):
 
 
 # /api/v1/reservations
-@circuitBreaker.circuit([Service.LIBRARY, Service.RATING], MethodResult('library or rating services unavailable', 500))
+#@circuitBreaker.circuit([Service.LIBRARY, Service.RATING], MethodResult('library or rating services unavailable', 500))
 def rent_book(ctx: QRContext):
     # get method params
     username = ctx.headers.environ['HTTP_X_USER_NAME']
@@ -70,25 +70,25 @@ def rent_book(ctx: QRContext):
     library_address = ctx.meta['services']['library']
     rating_address = ctx.meta['services']['rating']
     if not knock_service(library_address, throw_exception=False) or \
-       not knock_service(rating_address, throw_exception=False):
-        return MethodResult('library or rating services unavailable', 500)
+       not knock_service(reservation_address, throw_exception=False):
+        return MethodResult('library or reservation services unavailable', 503)
 
     # get reservations
     resp = send_request_supress(reservation_address, f'api/v1/reservations',
                         request=QRRequest(params=params, json_data=ctx.json_data, headers=ctx.headers))
     if resp.status_code != 200:
-        return MethodResult(RentBookError('reservations not found', []), 400)
+        return MethodResult(ErrorDTO('reservations not found', []), 503)
     reservations = resp.get_json()
 
     # get user rating
     resp = send_request_supress(rating_address, f'api/v1/rating',
                         request=QRRequest(params=params, json_data=ctx.json_data, headers=ctx.headers))
     if resp.status_code != 200:
-        return MethodResult('user not found', 400)
+        return MethodResult(ErrorDTO('Bonus Service unavailable'), 503)
     rating = resp.get_json()
 
     if len(reservations) >= rating['stars']:
-        return MethodResult(RentBookError('reservations limit reached', []), 400)
+        return MethodResult(ErrorDTO('reservations limit reached', []), 400)
 
     # create reservation
     resp = send_request_supress(reservation_address, f'api/v1/reservations', method='POST',

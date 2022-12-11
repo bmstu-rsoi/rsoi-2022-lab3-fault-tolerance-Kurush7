@@ -1037,7 +1037,7 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											"setTimeout(() => {}, 30000); "
+											"setTimeout(() => {}, 3); "
 										],
 										"type": "text/javascript"
 									}
@@ -1269,7 +1269,7 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											"setTimeout(() => {}, 30000); "
+											"setTimeout(() => {}, 3); "
 										],
 										"type": "text/javascript"
 									}
