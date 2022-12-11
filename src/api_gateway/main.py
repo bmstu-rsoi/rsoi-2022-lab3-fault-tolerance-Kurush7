@@ -16,6 +16,7 @@ from gateway.proxy_api import *
 from gateway.compound_api import *
 from gateway.circuit_breaker import circuitBreaker
 from common.job_queue import TASK_QUEUE, run_task_queue
+from common.common_api import health
 
 
 class GatewayServer(FlaskServer):
@@ -87,4 +88,5 @@ if __name__ == "__main__":
     server.register_method('/api/v1/reservations', get_user_reservations, 'GET')
     server.register_method('/api/v1/reservations', rent_book, 'POST')
     server.register_method('/api/v1/reservations/<reservation_uid>/return', return_book, 'POST')
+    server.register_method('/manage/health', health, 'GET')
     server.run(host, port)
