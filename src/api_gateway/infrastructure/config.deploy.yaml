@@ -1,7 +1,7 @@
 app:
   app_name: GatewayService
   debug: false
-  host: 0.0.0.0
+  host: api_gateway
   port: 8080
   logging:
     logger_name: GatewayServiceLogger
@@ -11,15 +11,15 @@ app:
     file_level: info
 
 rating_service:
-  host: 0.0.0.0
+  host: rating
   port: 8050
 
 library_service:
-  host: 0.0.0.0
+  host: library
   port: 8060
 
 reservation_service:
-  host: 0.0.0.0
+  host: reservation
   port: 8070
 
 circuit_breaker:

@@ -44,5 +44,3 @@ services:
 
 volumes:
   db-data:
-  cache:
-    driver: local
