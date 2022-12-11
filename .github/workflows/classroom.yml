@@ -55,7 +55,7 @@ jobs:
         timeout-minutes: 5
         run: ./scripts/test-script.sh
         env:
-          VARIANT: 4
+          VARIANT: v4
           SERVICE_NAME: api_gateway
           PORT_NUMBER: 8080
 
