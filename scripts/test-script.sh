@@ -56,7 +56,6 @@ trap 'timed $start' EXIT
 
 printf "=== Start test scenario ===\n"
 
-docker ps
 # success execute
 success
 
