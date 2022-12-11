@@ -6,7 +6,7 @@ from .circuit_breaker import circuitBreaker, Service, ServiceUnavailableExceptio
 
 
 # /api/v1/libraries
-#@circuitBreaker.circuit([Service.LIBRARY], MethodResult('libraries not found', 503))
+@circuitBreaker.circuit([Service.LIBRARY], MethodResult('libraries not found', 503))
 def list_libraries_in_city(ctx: QRContext):
     # full redirect
     address = ctx.meta['services']['library']
