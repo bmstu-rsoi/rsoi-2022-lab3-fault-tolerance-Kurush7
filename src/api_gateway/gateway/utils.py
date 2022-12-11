@@ -25,9 +25,7 @@ def get_library(address: QRAddress, uid: str):
 
 def send_request_supress(address: QRAddress, url: str, method='GET', request: QRRequest = None):
     try:
-        params = request.get_args() if request is not None else dict()
-        resp = requests.request(method, address.get_full_url(url), **params)
-        return QRResponse(resp.ok, resp.status_code, resp.reason, resp.content)
+        return send_request(address, url, method, request)
     except Exception as e:
         return QRResponse(False, 500, str(e), bytes())
 
