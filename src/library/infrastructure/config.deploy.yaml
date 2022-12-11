@@ -1,7 +1,7 @@
 app:
   app_name: LibraryService
   debug: false
-  host: 0.0.0.0
+  host: library
   port: 8060
   logging:
     logger_name: LibraryServiceLogger
