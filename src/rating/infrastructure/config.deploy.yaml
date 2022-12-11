@@ -1,7 +1,7 @@
 app:
   app_name: RatingService
   debug: false
-  host: rating
+  host: 0.0.0.0
   port: 8050
   logging:
     logger_name: RatingServiceLogger

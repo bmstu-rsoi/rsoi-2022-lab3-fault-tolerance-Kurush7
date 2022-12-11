@@ -1,7 +1,7 @@
 app:
   app_name: GatewayService
   debug: false
-  host: api_gateway
+  host: 0.0.0.0
   port: 8080
   logging:
     logger_name: GatewayServiceLogger

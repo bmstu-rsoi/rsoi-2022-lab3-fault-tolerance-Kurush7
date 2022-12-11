@@ -1,7 +1,7 @@
 app:
   app_name: ReservationService
   debug: false
-  host: reservation
+  host: 0.0.0.0
   port: 8070
   logging:
     logger_name: ReservationServiceLogger
