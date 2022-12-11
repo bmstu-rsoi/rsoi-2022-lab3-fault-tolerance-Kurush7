@@ -42,6 +42,7 @@ jobs:
 
       - name: Fill database
         run: |
+          sleep 20
           cd postgres
           chmod +x 20-create-databases.sh
           ./20-create-databases.sh
