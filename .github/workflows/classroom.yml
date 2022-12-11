@@ -31,7 +31,7 @@ jobs:
           docker compose up -d
           ./scripts/wait-script.sh
         env:
-          - WAIT_PORTS=8080,8070,8060,8050
+          WAIT_PORTS: 8080,8070,8060,8050
 
       - name: Fill database
         run: |
@@ -43,9 +43,9 @@ jobs:
         timeout-minutes: 5
         run: ./scripts/test-script.sh
         env:
-          - VARIANT=4
-          - SERVICE_NAME=api_gateway
-          - VARIANT=8080
+          VARIANT: 4
+          SERVICE_NAME: api_gateway
+          PORT_NUMBER: 8080
 
       - uses: education/autograding@v1
         id: autograder
