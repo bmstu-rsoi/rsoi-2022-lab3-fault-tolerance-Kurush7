@@ -150,13 +150,6 @@ def return_book(ctx: QRContext, reservation_uid: str):
 
     library_uid, book_uid, till_date = reservation['libraryUid'], reservation['bookUid'], reservation['tillDate']
 
-    # get user rating
-    resp = send_request_supress(rating_address, f'api/v1/rating',
-                        request=QRRequest(params=params, json_data=ctx.json_data, headers=ctx.headers))
-    if resp.status_code != 200:
-        return MethodResult('user not found', 400)
-    rating = resp.get_json()
-
     # get book condition
     resp = send_request_supress(library_address, f'api/v1/books/{book_uid}', request=QRRequest())
     if resp.status_code != 200:
@@ -181,30 +174,47 @@ def return_book(ctx: QRContext, reservation_uid: str):
 
     # update rating
     def update_rating(*args):
-        new_stars = rating['stars']
-        ok = True
-        nonlocal date, till_date
-        date, till_date = datetime.strptime(date, "%Y-%m-%d"), datetime.strptime(till_date, "%Y-%m-%d")
-        if date > till_date:
-            ok = False
-            new_stars -= 10
-        if _condition_worsened(book_pre_condition, condition):
-            ok = False
-            new_stars -= 10
-        if ok:
-            new_stars += 1
-
-        params['stars'] = new_stars
-        def send_update_rating():
-            resp = send_request(rating_address, f'api/v1/rating',
-                                request=QRRequest(params=params), method='PUT')
+        # get user rating
+        def get_rating():
+            resp = send_request_supress(rating_address, f'api/v1/rating',
+                                        request=QRRequest(params=params, json_data=ctx.json_data, headers=ctx.headers))
             if resp.status_code != 200:
-                raise Exception('failed to update rating book')
+                raise Exception('failed to get rating')
+            rating = resp.get_json()
+            return rating
+
+        def set_new_rating(rating):
+            new_stars = rating['stars']
+            ok = True
+            nonlocal date, till_date
+            date, till_date = datetime.strptime(date, "%Y-%m-%d"), datetime.strptime(till_date, "%Y-%m-%d")
+            if date > till_date:
+                ok = False
+                new_stars -= 10
+            if _condition_worsened(book_pre_condition, condition):
+                ok = False
+                new_stars -= 10
+            if ok:
+                new_stars += 1
+
+            params['stars'] = new_stars
+            def send_update_rating():
+                resp = send_request(rating_address, f'api/v1/rating',
+                                    request=QRRequest(params=params), method='PUT')
+                if resp.status_code != 200:
+                    raise Exception('failed to update rating book')
+
+            TASK_QUEUE.enqueue(
+                task=send_update_rating,
+                retry=10,
+                name='set new rating'
+            )
 
         TASK_QUEUE.enqueue(
-            task=send_update_rating,
+            task=get_rating,
+            callback=set_new_rating,
             retry=10,
-            name='update rating'
+            name='get current rating'
         )
 
     TASK_QUEUE.enqueue(
