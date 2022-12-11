@@ -20,7 +20,8 @@ class TaskQueue:
         if self.logger:
             self.logger.info('running async task queue')
 
-    def enqueue(self, task, callback=None, retry=None, name=None):
+    def enqueue(self, task, callback=None, retry: int = None, name=None):
+        # retry - considers work failed if it threw any exception
         if name is None:
             name = str(task)
 

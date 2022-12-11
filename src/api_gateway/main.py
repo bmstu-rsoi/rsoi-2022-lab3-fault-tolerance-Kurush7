@@ -78,6 +78,7 @@ if __name__ == "__main__":
         server.configure_logger(config['app']['logging'])
         TASK_QUEUE.set_logger(server.logger)
         circuitBreaker.register_logger(server.logger)
+        meta['logger'] = server.logger
     run_task_queue()
 
     server.register_method('/api/v1/libraries', list_libraries_in_city, 'GET')

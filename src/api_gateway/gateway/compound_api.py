@@ -1,10 +1,12 @@
 from qr_server.Server import MethodResult, QRContext
 
+from .circuit_breaker import circuitBreaker, ServiceUnavailableException
 from .dtos import *
 from .utils import *
 
 
 # /api/v1/reservations
+@circuitBreaker.circuit([Service.RESERVATION], MethodResult('reservations not found', 500))
 def get_user_reservations(ctx: QRContext):
     # full redirect
     reservation_address = ctx.meta['services']['reservation']
@@ -14,15 +16,24 @@ def get_user_reservations(ctx: QRContext):
     resp = send_request(reservation_address, f'api/v1/reservations',
                         request=QRRequest(params=params, json_data=ctx.json_data, headers=ctx.headers))
     if resp.status_code != 200:
-        return MethodResult('reservations not found', 400)
+        raise ServiceUnavailableException(Service.RESERVATION)
 
     data = resp.get_json()
     book_uids = list(set([x['bookUid'] for x in data]))
     library_uids = list(set([x['libraryUid'] for x in data]))
 
+
     library_address = ctx.meta['services']['library']
     books = {uid: get_book(library_address, uid) for uid in book_uids}
     libraries = {uid: get_library(library_address, uid) for uid in library_uids}
+    full = True
+
+    if None in list(books.values()) + list(libraries.values()):
+        if ctx.meta.get('logger'):
+            ctx.meta['logger'].warning('User Reservations: failed to get books & libraries full info')
+        full = False
+        books = {uid:{'bookUid': uid} for uid in book_uids}
+        libraries = {uid:{'libraryUid': uid} for uid in library_uids}
 
     for d in data:
         d['book'] = books[d['bookUid']]
@@ -30,7 +41,8 @@ def get_user_reservations(ctx: QRContext):
         d.pop('libraryUid')
         d.pop('bookUid')
 
-    return MethodResult(ListReservationFullDTO(data))
+    result = ListReservationFullDTO(data) if full else ListReservationDummyDTO(data)
+    return MethodResult(result)
 
 
 # /api/v1/reservations

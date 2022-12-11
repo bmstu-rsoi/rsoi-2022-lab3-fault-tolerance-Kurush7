@@ -20,6 +20,14 @@ def short_book_parser(d: dict):
                remove=['id', 'condition'])
 
 
+@dataclass
+class BookDummyDTO(QRDTO):
+    bookUid: str
+
+@dataclass
+class LibraryDummyDTO(QRDTO):
+    bookUid: str
+
 @dto_kwargs_parser(library_parser)
 @dataclass
 class LibraryDTO(QRDTO):

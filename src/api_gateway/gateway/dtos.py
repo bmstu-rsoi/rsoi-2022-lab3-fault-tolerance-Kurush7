@@ -5,12 +5,20 @@ from rating.rating.dtos import *
 from library.library.dtos import *
 from reservation.reservation.dtos import *
 
-
 @dataclass
 class ReservationFullDTO(QRDTO):
     reservationUid: str
     book: BookShortDTO
     library: LibraryDTO
+    status: str
+    startDate: str
+    tillDate: str
+
+@dataclass
+class ReservationDummyDTO(QRDTO):
+    reservationUid: str
+    book: BookDummyDTO
+    library: LibraryDummyDTO
     status: str
     startDate: str
     tillDate: str
@@ -40,4 +48,7 @@ class CreateReservationDTO(ReservationFullDTO):
 
 
 class ListReservationFullDTO(ArrayQRDTO(ReservationFullDTO)):
+    pass
+
+class ListReservationDummyDTO(ArrayQRDTO(ReservationDummyDTO)):
     pass
