@@ -38,7 +38,7 @@ jobs:
           ./scripts/wait-script.sh
           sleep 10
         env:
-          WAIT_PORTS: 8080,8070,8060,8050
+          WAIT_PORTS: 8080,8070,8060,8050,5432
         # ./scripts/wait-script.sh
         #  sleep 10
 
