@@ -52,7 +52,7 @@ jobs:
       - name: Run API Tests
         timeout-minutes: 5
         run: |
-          docker-compose logs
+          docker-compose logs --tail=1000
           ./scripts/test-script.sh
         env:
           VARIANT: v4

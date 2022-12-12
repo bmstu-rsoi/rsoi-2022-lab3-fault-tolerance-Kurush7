@@ -71,4 +71,4 @@ step 3
 # start service
 step 4
 
-docker-compose logs
+docker-compose logs --tail=100000
