@@ -20,6 +20,8 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
+
+SET search_path = reservations;
 --
 -- Name: reservation; Type: TABLE; Schema: public; Owner: program
 --

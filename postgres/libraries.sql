@@ -20,6 +20,7 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
+SET search_path = libraries;
 --
 -- Name: books; Type: TABLE; Schema: public; Owner: program
 --
