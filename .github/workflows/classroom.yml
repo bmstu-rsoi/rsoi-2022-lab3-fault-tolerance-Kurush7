@@ -36,18 +36,18 @@ jobs:
         run: |
           docker compose up -d
           ./scripts/wait-script.sh
-          sleep 40
+          sleep 20
         env:
           WAIT_PORTS: 8080,8070,8060,8050
         # ./scripts/wait-script.sh
         #  sleep 10
 
-      - name: Fill database
-        run: |
-          cd src
-          chmod +x fill_db.sh
-          ./fill_db.sh
-          docker-compose logs
+#      - name: Fill database
+#        run: |
+#          cd src
+#          chmod +x fill_db.sh
+#          ./fill_db.sh
+#          docker-compose logs
 
       - name: Run API Tests
         timeout-minutes: 5
