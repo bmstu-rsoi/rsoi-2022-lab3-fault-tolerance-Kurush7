@@ -77,7 +77,7 @@ def rent_book(ctx: QRContext):
     resp = send_request_supress(reservation_address, f'api/v1/reservations',
                         request=QRRequest(params=params, json_data=ctx.json_data, headers=ctx.headers))
     if resp.status_code != 200:
-        return MethodResult(ErrorDTO('reservations not found', []), 503)
+        return MethodResult(ErrorDTO('reservations not found'), 503)
     reservations = resp.get_json()
 
     # get user rating
@@ -88,7 +88,7 @@ def rent_book(ctx: QRContext):
     rating = resp.get_json()
 
     if len(reservations) >= rating['stars']:
-        return MethodResult(ErrorDTO('reservations limit reached', []), 400)
+        return MethodResult(ErrorDTO('reservations limit reached'), 400)
 
     # create reservation
     resp = send_request_supress(reservation_address, f'api/v1/reservations', method='POST',

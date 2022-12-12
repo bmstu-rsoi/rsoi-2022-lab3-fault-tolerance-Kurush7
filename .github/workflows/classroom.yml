@@ -47,10 +47,13 @@ jobs:
           cd src
           chmod +x fill_db.sh
           ./fill_db.sh
+          docker-compose logs
 
       - name: Run API Tests
         timeout-minutes: 5
-        run: ./scripts/test-script.sh
+        run: |
+          docker-compose logs
+          ./scripts/test-script.sh
         env:
           VARIANT: v4
           SERVICE_NAME: rating
