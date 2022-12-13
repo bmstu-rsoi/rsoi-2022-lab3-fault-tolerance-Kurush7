@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# todo uncomment set -e
+set -e
 
 variant=${1:-${VARIANT}}
 service=${2:-${SERVICE_NAME}}
@@ -70,6 +70,3 @@ step 3
 
 # start service
 step 4
-
-docker-compose logs -t --tail=100000
-docker-compose logs -t --tail=100000 postgres
