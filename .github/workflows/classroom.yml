@@ -31,6 +31,20 @@ jobs:
         timeout-minutes: 10
         run: docker compose build
 
+      - name: Run database
+        timeout-minutes: 5
+        run: |
+          docker compose up -d postgres
+          sleep 10
+
+      - name: Fill database
+        timeout-minutes: 5
+        run: |
+          cd src
+          chmod +x fill_db.sh
+          ./fill_db.sh
+          date +%Y:%m:%d_%H:%M:%S
+
       - name: Run containers
         timeout-minutes: 5
         run: |
@@ -40,16 +54,6 @@ jobs:
           WAIT_PORTS: 8080,8070,8060,8050
         # ./scripts/wait-script.sh
         #  sleep 10
-
-      - name: Fill database
-        timeout-minutes: 5
-        run: |
-          cd src
-          chmod +x fill_db.sh
-          ./fill_db.sh
-          date +%Y:%m:%d_%H:%M:%S
-          sleep 20
-          date +%Y:%m:%d_%H:%M:%S
 
       - name: Run API Tests
         timeout-minutes: 5
