@@ -71,4 +71,5 @@ step 3
 # start service
 step 4
 
-docker-compose logs --tail=100000
+docker-compose logs -t --tail=100000
+docker-compose logs -t --tail=100000 postgres
