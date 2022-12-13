@@ -1,0 +1,25 @@
+app:
+  app_name: LibraryService
+  debug: false
+  host: 0.0.0.0
+  port: 8060
+  logging:
+    logger_name: LibraryServiceLogger
+    app_name: LibraryService
+    level: info
+    file: library_service.log
+    file_level: info
+
+database:
+  connector: postgres
+  dbname: libraries
+  username: program
+  password: test
+  host: postgres
+  port: 5432
+  logging:
+    logger_name: LibraryDatabaseLogger
+    app_name: LibraryService
+    level: info
+    file: library_service.log
+    file_level: info

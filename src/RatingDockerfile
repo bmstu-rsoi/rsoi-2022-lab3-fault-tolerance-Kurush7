@@ -1,0 +1,11 @@
+FROM python:3.8
+
+RUN apt update && apt install -y gcc python3-dev musl-dev
+
+COPY ./rating/requirements.txt ./rating/requirements.txt
+RUN pip3 install -r ./rating/requirements.txt
+
+COPY . .
+COPY ./rating/infrastructure/config.deploy.yaml ./rating/config.yaml
+WORKDIR ./rating
+CMD ["python", "main.py"]

@@ -1,0 +1,27 @@
+app:
+  app_name: GatewayService
+  debug: false
+  host: 0.0.0.0
+  port: 8080
+  logging:
+    logger_name: GatewayServiceLogger
+    app_name: GatewayService
+    level: info
+    file: gateway_service.log
+    file_level: info
+
+rating_service:
+  host: rating
+  port: 8050
+
+library_service:
+  host: library
+  port: 8060
+
+reservation_service:
+  host: reservation
+  port: 8070
+
+circuit_breaker:
+  failure_threshold: 1000
+  knock_timeout: 30   # опрашивать упавшие сервисы раз в N секунд
