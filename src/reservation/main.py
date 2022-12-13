@@ -79,6 +79,7 @@ if __name__ == "__main__":
 
     if config['app']['logging']:
         server.configure_logger(config['app']['logging'])
+        server.logger.info(f'repository: found tables: {[x for x in server.db.meta["tables"]]}')
 
     server.register_method('/api/v1/reservations', get_user_reservations, 'GET')
     server.register_method('/api/v1/reservations/<reservation_uid>', get_reservation, 'GET')
