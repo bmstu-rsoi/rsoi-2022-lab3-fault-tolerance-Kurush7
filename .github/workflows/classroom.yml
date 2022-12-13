@@ -42,6 +42,7 @@ jobs:
         #  sleep 10
 
       - name: Fill database
+        timeout-minutes: 5
         run: |
           cd src
           chmod +x fill_db.sh
@@ -54,6 +55,9 @@ jobs:
         timeout-minutes: 5
         run: |
           date +%Y:%m:%d_%H:%M:%S
+          docker exec -i postgres psql -U program libraries -c "\dt"
+          docker exec -i postgres psql -U program ratings -c "\dt"
+          docker exec -i postgres psql -U program reservations -c "\dt"
           ./scripts/test-script.sh
         env:
           VARIANT: v4
